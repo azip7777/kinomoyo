@@ -6,11 +6,21 @@
 
 body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  background-color: #3a3c35;
-  color: white;
+  
+  /* 🔥 Градиентный розово-фиолетовый фон */
+  background: linear-gradient(135deg, rgba(255, 105, 180, 0.4), rgba(138, 43, 226, 0.4));
+  
+  /* ✨ Эффект стекла */
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+
+  /* Небольшой внутренний отступ */
   padding: 2rem;
+  color: white;
+  min-height: 100vh;
 }
 
+/* Сетка фильмов */
 .film-gallery {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -19,6 +29,7 @@ body {
   justify-content: center;
 }
 
+/* Каждая карточка фильма */
 .film-card {
   flex: 0 0 auto;
   width: 300px;
@@ -29,8 +40,17 @@ body {
   gap: 0.5rem;
   height: auto;
   padding: 0.5rem;
+
+  /* 🌫️ Полупрозрачный фон для "стеклянного" эффекта */
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.25);
 }
 
+/* Обложка фильма */
 .film-card img {
   width: 150px;
   height: 225px;
@@ -40,6 +60,7 @@ body {
   grid-column: 1;
 }
 
+/* Название фильма */
 .film-title {
   font-size: 0.9rem;
   font-weight: bold;
@@ -49,37 +70,4 @@ body {
   align-self: start;
 }
 
-.film-year {
-  font-size: 0.8rem;
-  color: #ccc;
-  line-height: 1.2;
-  grid-column: 2;
-  grid-row: 2;
-}
-
-.film-director {
-  font-size: 0.8rem;
-  color: #ccc;
-  line-height: 1.2;
-  grid-column: 2;
-  grid-row: 3;
-}
-
-.rating {
-  color: white;
-  font-size: 1rem;
-  letter-spacing: 1px;
-  line-height: 1;
-  grid-column: 2;
-  grid-row: 4;
-  margin-top: auto;
-}
-
-.rating .filled {
-  font-size: 1.2rem;
-}
-
-.rating .empty {
-  font-size: 0.9rem;
-  opacity: 0.5;
-}
+/* Год выпуска */
