@@ -2,8 +2,8 @@ name: Sync TMDB Movies to Config
 
 on:
   schedule:
-    - cron: '0 0 * * 0'  # Каждое воскресенье
-  workflow_dispatch:      # Запуск вручную
+    - cron: '0 0 * * 0'
+  workflow_dispatch:
 
 jobs:
   sync:
@@ -19,8 +19,8 @@ jobs:
       - name: Run TMDB Sync Script
         env:
           TMDB_API_KEY: 928dc5745966ab268bf02f5aff9aaabb
+          TMDB_ACCESS_TOKEN: eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI5MjhkYzU3NDU5NjZhYjI2OGJmMDJmNWFmZjlhYWFiYiIsIm5iZiI6MTczNTk5MjkwMi42NzkwMDAxLCJzdWIiOiI2Nzc5MjI0NjZkN2NhMDBlNzg3MjdmMGIiLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.Huzv7cIZRRKKLNSvbRZDQZmX9w0Ny1Gif6G8LI2WW30
           ACCOUNT_ID: 21728623
-          SESSION_ID: eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI5MjhkYzU3NDU5NjZhYjI2OGJmMDJmNWFmZjlhYWFiYiIsIm5iZiI6MTczNTk5MjkwMi42NzkwMDAxLCJzdWIiOiI2Nzc5MjI0NjZkN2NhMDBlNzg3MjdmMGIiLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.Huzv7cIZRRKKLNSvbRZDQZmX9w0Ny1Gif6G8LI2WW30
         run: node sync-all-movies.js
       
       - name: Commit and Push
