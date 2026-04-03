@@ -1,0 +1,12 @@
+{
+  "name": "kinomoyo-sync",
+  "version": "1.0.0",
+  "description": "Sync TMDB movies to config",
+  "main": "sync-all-movies.js",
+  "scripts": {
+    "sync": "node sync-all-movies.js"
+  },
+  "keywords": ["tmdb", "movies"],
+  "author": "",
+  "license": "ISC"
+}
