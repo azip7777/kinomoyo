@@ -10,37 +10,16 @@ function createStarRating(rating) {
   return filled + empty;
 }
 
-// Build direct Letterboxd film URL from poster path; fallback to search if parsing fails
-function letterboxdFilmUrlFromPoster(posterUrl, title, year) {
-  // Try to derive slug from Letterboxd poster URL
-  try {
-    const match = posterUrl.match(/\/\d+-([a-z0-9-]+)-\d+-\d+-\d+-\d+-crop\.jpg/i);
-    if (match && match[1]) {
-      const slug = match[1];
-      return `https://letterboxd.com/film/${slug}/`;
-    }
-  } catch (_) {}
-
-  // Fallback: derive slug from title (direct film link, not search)
-  const slugFromTitle = title
-    .toLowerCase()
-    .replace(/&/g, 'and')
-    .replace(/['’]/g, '')
-    .replace(/[^a-z0-9]+/g, '-')
-    .replace(/^-+|-+$/g, '');
-  return `https://letterboxd.com/film/${slugFromTitle}/`;
-}
-
 function createFilmCard(film) {
+  const slug = film.title.toLowerCase().replace(/[^a-z0-9]+/g, '-');
   return `
     <div class="film-card">
-      <a href="${letterboxdFilmUrlFromPoster(film.poster, film.title, film.year)}" target="_blank" rel="noopener">
-        <img src="${film.poster}" alt="${film.title}">
+      <a href="https://letterboxd.com/film/${slug}/" target="_blank">
+        <img src="${film.poster}" alt="${film.title}" loading="lazy">
       </a>
       <div class="film-info">
         <div class="film-title">${film.title}</div>
         <div class="film-year">${film.year}</div>
-        <div class="film-director">Directed by ${film.director}</div>
         <div class="rating">${createStarRating(film.rating)}</div>
       </div>
     </div>
@@ -50,39 +29,44 @@ function createFilmCard(film) {
 function renderGallery() {
   const gallery = document.getElementById('gallery');
   const startIndex = (currentPage - 1) * FILMS_PER_PAGE;
-  const endIndex = startIndex + FILMS_PER_PAGE;
-  const pageFilms = films.slice(startIndex, endIndex);
-  
+  const pageFilms = films.slice(startIndex, startIndex + FILMS_PER_PAGE);
   gallery.innerHTML = pageFilms.map(film => createFilmCard(film)).join('');
 }
 
 function renderPagination() {
   const pagination = document.getElementById('pagination');
-  let paginationHTML = '';
+  if (totalPages <= 1) return;
+
+  let html = '<div class="pagination-buttons">';
   
-  if (totalPages > 1) {
-    paginationHTML += '<div class="pagination-buttons">';
-    
-    for (let i = 1; i <= totalPages; i++) {
-      const activeClass = i === currentPage ? 'active' : '';
-      paginationHTML += `<button class="pagination-btn ${activeClass}" onclick="changePage(${i})">${i}</button>`;
-    }
-    
-    paginationHTML += '</div>';
+  // Логика сокращенной пагинации
+  const startPage = Math.max(1, currentPage - 2);
+  const endPage = Math.min(totalPages, currentPage + 2);
+
+  if (startPage > 1) {
+    html += `<button class="pagination-btn" onclick="changePage(1)">1</button>`;
+    if (startPage > 2) html += `<span>...</span>`;
   }
-  
-  pagination.innerHTML = paginationHTML;
+
+  for (let i = startPage; i <= endPage; i++) {
+    html += `<button class="pagination-btn ${i === currentPage ? 'active' : ''}" onclick="changePage(${i})">${i}</button>`;
+  }
+
+  if (endPage < totalPages) {
+    if (endPage < totalPages - 1) html += `<span>...</span>`;
+    html += `<button class="pagination-btn" onclick="changePage(${totalPages})">${totalPages}</button>`;
+  }
+
+  html += '</div>';
+  pagination.innerHTML = html;
 }
 
 window.changePage = function(page) {
-  if (page >= 1 && page <= totalPages) {
-    currentPage = page;
-    renderGallery();
-    renderPagination();
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  }
+  currentPage = page;
+  renderGallery();
+  renderPagination();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
 renderGallery();
 renderPagination();
-
