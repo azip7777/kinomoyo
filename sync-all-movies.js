@@ -10,7 +10,7 @@ const syncAllMovies = async () => {
     try {
         const response = await axios.get(`${BASE_URL}/movie/popular`, {
             headers: {
-                Authorization: `Bearer ${API_TOKEN}`
+                Authorization: `Bearer ${eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI5MjhkYzU3NDU5NjZhYjI2OGJmMDJmNWFmZjlhYWFiYiIsIm5iZiI6MTczNTk5MjkwMi42NzkwMDAxLCJzdWIiOiI2Nzc5MjY0NjZkN2NhMDBlNzg3MjdmMGIiLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.Huzv7cIZRRKKLNSvbRZDQZmX9w0Ny1Gif6G8LI2WW30}`
             }
         });
         console.log('Movies synced:', response.data.results);
