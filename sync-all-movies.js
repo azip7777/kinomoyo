@@ -5,8 +5,8 @@ const fs = require('fs');
 const path = require('path');
 
 // Configuration from environment variables
-const TMDB_API_KEY = process.env.TMDB_API_KEY || '928dc5745966ab268bf02f5aff9aaabb';
-const TMDB_ACCESS_TOKEN = process.env.TMDB_ACCESS_TOKEN || 'eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI5MjhkYzU3NDU5NjZhYjI2OGJmMDJmNWFmZjlhYWFiYiIsIm5iZiI6MTczNTk5MjkwMi42NzkwMDAxLCJzdWIiOiI2Nzc5MjI0NjZkN2NhMDBlNzg3MjdmMGIiLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.Huzv7cIZRRKKLNSvbRZDQZmX9w0Ny1Gif6G8LI2WW30';
+const TMDB_API_KEY = process.env.TMDB_API_KEY || '0153d0396a14171e8af530a9a95d09fe';
+const TMDB_ACCESS_TOKEN = process.env.TMDB_ACCESS_TOKEN || 'eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIwMTUzZDAzOTZhMTQxNzFlOGFmNTMwYTlhOTVkMDlmZSIsIm5iZiI6MTczNTk5MjkwMi42NzkwMDAxLCJzdWIiOiI2Nzc5MjY0NjZkN2NhMDBlNzg3MjdmMGIiLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.sk8xtBWz9lz0P8mUHsY8pvoj5mtoyTZBiAFG5fSH2yc';
 const ACCOUNT_ID = process.env.ACCOUNT_ID || '21728623';
 
 const TMDB_BASE_URL = 'https://api.themoviedb.org/3';
