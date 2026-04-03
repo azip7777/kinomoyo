@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TMDB Rated Movies</title>
+    <style>
+        body { font-family: Arial, sans-serif; }
+        .progress { margin: 20px 0; }
+    </style>
+</head>
+<body>
+    <h1>TMDB Rated Movies</h1>
+    <div class="progress"><progress id="progress" value="0" max="100"></progress></div>
+    <ul id="movies"></ul>
+
+    <script>
+        const API_KEY = 'eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI5MjhkYzU3NDU5NjZhYjI2OGJmMDJmNWFmZjlhYWFiYiIsIm5iZiI6MTczNTk5MjkwMi42NzkwMDAxLCJzdWIiOiI2Nzc5MjY0NjZkN2NhMDBlNzg3MjdmMGIiLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.Huzv7cIZRRKKLNSvbRZDQZmX9w0Ny1Gif6G8LI2WW30';
+        const moviesList = document.getElementById('movies');
+        const progressBar = document.getElementById('progress');
+
+        async function fetchMovies() {
+            try {
+                const response = await fetch(`https://api.themoviedb.org/3/movie/popular?api_key=${API_KEY}`);
+                if (!response.ok) throw new Error('Failed to fetch movies');
+                const data = await response.json();
+                const movies = data.results;
+                const totalMovies = movies.length;
+
+                movies.forEach((movie, index) => {
+                    const li = document.createElement('li');
+                    li.textContent = `${movie.title} (Rating: ${movie.vote_average})`;
+                    moviesList.appendChild(li);
+                    progressBar.value = ((index + 1) / totalMovies) * 100;
+                });
+
+                // Copy config.js content to clipboard
+                const configContent = "const config = { apiKey: 'YOUR_API_KEY' };\nexport default config;";
+                navigator.clipboard.writeText(configContent).then(() => {
+                    console.log('Config copied to clipboard');
+                }).catch(err => {
+                    console.error('Failed to copy config', err);
+                });
+
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        }
+
+        fetchMovies();
+    </script>
+</body>
+</html>
