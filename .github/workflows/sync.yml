@@ -1,0 +1,22 @@
+name: Update Movies
+on:
+  schedule:
+    - cron: '0 0 * * *' # Раз в сутки
+  workflow_dispatch: # Кнопка ручного запуска
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js
+        uses: actions/setup-node@v2
+      - run: npm install axios # если нужен
+      - run: node sync-all-movies.js
+      - name: Commit changes
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add config.js
+          git commit -m "Auto-update movies" || exit 0
+          git push
